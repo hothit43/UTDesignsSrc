@@ -1,0 +1,709 @@
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ *
+ * You can see the styles here:
+ * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/preflight";
+ */
+@tailwind base;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@300;400;700;900&family=Source+Sans+Pro:wght@300;400&display=swap');
+
+/**
+ * This injects any component classes registered by plugins.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/components";
+ */
+@tailwind components;
+
+/**
+ * Here you would add any of your custom component classes; stuff that you'd
+ * want loaded *before* the utilities so that the utilities could still
+ * override them.
+ *
+ * Example:
+ *
+ * .btn { ... }
+ * .form-input { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "components/buttons";
+ * @import "components/forms";
+ */
+
+/**
+ * This injects all of Tailwind's utility classes, generated based on your
+ * config file.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/utilities";
+ */
+@tailwind utilities;
+
+/**
+ * Here you would add any custom utilities you need that don't come out of the
+ * box with Tailwind.
+ *
+ * Example :
+ *
+ * .bg-pattern-graph-paper { ... }
+ * .skew-45 { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "utilities/background-patterns";
+ * @import "utilities/skew-transforms";
+ */
+$sk-red: theme('colors.sk-red-bright');
+$sk-red-dark: theme('colors.sk-red-dark');
+
+@mixin prefix($declarations, $prefixes: ()) {
+    @each $property, $value in $declarations {
+      @each $prefix in $prefixes {
+        #{'-' + $prefix + '-' + $property}: $value;
+      }
+  
+      // Output standard non-prefixed declaration
+      #{$property}: $value;
+    }
+}
+
+
+@mixin transition($args...) {
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -ms-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+}
+body.error404 {
+    background: $sk-red-dark;
+}
+
+
+h1 {
+    span {
+        font-weight: 300;
+    }
+    .lg &,
+    .xl & {
+        font-size:3.25rem;
+    }
+}
+
+p {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+input {
+    &:-webkit {
+        &-autofill {
+            &:hover,
+            &:focus,
+            &:active {
+                -webkit-box-shadow: 0 0 0 30px white inset !important;
+            }
+            -webkit-box-shadow: 0 0 0 30px white inset !important;
+            -webkit-text-fill-color: #000 !important;
+        }
+    }
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: #c2c2c2;
+      }
+    &::-moz-placeholder { /* Firefox 19+ */
+        color: #c2c2c2;
+      }
+}
+
+textarea {
+    &::-webkit-input-placeholder {
+        color:#c2c2c2;
+    }
+    &::-moz-placeholder {
+        color:#c2c2c2;
+    }
+}
+
+.selector {
+    @include prefix((
+      column-count: 3,
+      column-gap: 1.5em,
+      column-rule: 2px solid hotpink
+    ), webkit moz);
+  }
+
+
+//container
+
+.see-work {
+    z-index: 0;
+    &.zindex {
+        z-index: 1;
+    }
+}
+
+.fullpage-wrapper {
+    opacity: 1;
+    z-index: 0;
+}
+
+//svg
+#morph {
+    width:100%;
+    height: 100%;
+    top:0;
+    left:0;
+    position: absolute;
+    pointer-events: none;
+    z-index:0;
+}
+
+#Circuits {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    overflow:hidden;
+    opacity: 0.17;
+    pointer-events: none;
+    path {
+        stroke-width:1;
+    }
+}
+
+.sto {
+    fill:none;stroke:#FFFFFF;stroke-width:0.75;stroke-miterlimit:10;
+}
+
+.intro{
+    position: relative;
+  
+}
+a.intro-btn {
+    @include transition(background 0.5s ease-in-out);
+    &:hover {
+        background:$sk-red-dark;
+    }
+}
+
+.about {
+    position: relative;
+    .container {
+        margin-top: -2.4rem;
+    }
+}
+
+
+.small-nav {
+    .lg &,
+    .xl & {
+        display:none !important;
+        opacity:0;
+    }
+    &.nav-hidden {
+        opacity:0;
+    }
+    a {
+        &:focus img,
+        &.active img {
+            @include prefix((
+                filter: brightness(0) saturate(100%) invert(33%) sepia(41%) saturate(2292%) hue-rotate(332deg) brightness(88%) contrast(90%),
+                transform: scale(1)
+            ), webkit moz); 
+            
+            
+            animation: pulse 0.5s ease-in-out 1;
+        }
+        &:hover img{
+            @include prefix((
+                filter: brightness(0) saturate(100%) invert(33%) sepia(41%) saturate(2292%) hue-rotate(332deg) brightness(88%) contrast(90%)
+            ), webkit moz); 
+        }
+        img {
+            @include transition(all 0.5s ease-in-out);
+        }
+    }
+    border-width: 0.5px;
+    opacity:1;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    z-index:2;
+    @include transition(all 0.5s ease-in-out);
+}
+
+.projects {
+    position: relative;
+    
+    a {
+        &.active {
+            font-weight: 700;
+            color: $sk-red;
+        }
+    }
+    .container.projects {
+        &::-webkit-scrollbar {
+            display:none;
+            width: 0px;
+            background: transparent; 
+        }
+    }
+    &.projects-large {
+        .projects {
+            @include transition(all 0.5s ease-in-out);
+            &.expanded {
+                position: absolute;
+                width: 100%;
+                height: 90%;
+                top: 5%;
+                z-index: 1;              
+            }
+        }
+        .expand-projs {
+            position: relative;
+            width:100%;
+            cursor:pointer;
+            opacity:0.3;
+            @include transition(opacity 0.5s ease-in-out);
+            &:hover {
+                opacity:1;
+            }
+            img {
+                position: absolute;
+                right:-15px;
+                top:0;
+                width:30px;
+                height:30px;
+                transition: all 0.8s;
+            }
+            &.expanded-icon {
+                position: absolute;
+                img {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
+
+    &.projects-small{
+        .project-item {
+            a {
+                transform: translateY(0) !important; 
+            }
+            background-size:cover;
+        }
+    }
+}
+
+.project-item {
+    @include transition(all .35s ease-in-out);
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size:100% auto;
+    transform-origin: center;
+    position:relative;
+    &::before {
+        content:"";
+        display:block;
+        position:absolute;
+        width:100%;
+        height:100%;
+        background: #fff;
+        opacity:0;
+        top:0;
+        left:0;
+        cursor:pointer;
+        @include transition(all .5s ease-in-out);
+    }
+    .content {
+        opacity:0;
+        color:#000;
+        position: relative;
+        z-index: 1;
+        cursor:pointer;
+        @include transition(all .5s ease-in-out);
+        span {
+            @include transition(all .5s ease-in-out);
+            transform: translateY(-200px);
+        }
+    }
+    &:hover {
+        background-size:200% auto;
+        .content {
+            opacity: 1;
+            span {
+                transform: translateY(0px);
+            }
+        }
+        &::before {
+            opacity:1;
+        }
+        a {
+            @include prefix((
+                transform: translateY(0px)
+              ), webkit moz);
+            border-width:1.5px;
+        }
+    }
+    a {
+
+        @include prefix((
+            transform: translateY(200px)
+        ), webkit moz);
+        @include transition(all .5s ease-in-out);
+    }
+
+}
+    
+.projects-enter {
+    @include prefix((
+        transform: scale(0.5) translatey(-80px)
+    ), webkit moz);   
+    opacity:0;
+}
+
+.projects-leave-to{
+    @include prefix((
+        transform: translatey(30px)
+    ), webkit moz); 
+    opacity:0;
+}
+
+.projects-leave-active {
+    position: absolute;
+    margin: auto;
+    z-index:-1;
+}
+.progress-container {
+    .progress-bar {
+        //0.5rem 0 .5rem .35rem;
+    }
+}
+.progress-bar {
+    white-space: nowrap;
+}
+
+.dms {
+    .lg &,
+    .xl & {
+        a img {
+            @include prefix((
+                filter: brightness(0) invert(1),
+                transform: rotateX(0)
+              ), webkit moz);
+            @include transition(all 300ms cubic-bezier(0.455, 0.030, 0.515, 0.955));
+        }
+        a:hover img {
+            @include prefix((
+                transform: rotateX(-180deg)
+              ), webkit moz); 
+              opacity:0.6;
+        }
+    }
+
+    .form-alert {
+        pointer-events:none;
+        &.success {
+            border-color: #35bc4d;
+            background: #c7ffce;
+        }
+    }
+
+}
+
+label.error {
+    color: #ffc012;
+    position: relative;
+    text-align: left;
+    display: block;
+    font-size: 11px;
+    line-height: 0.5;
+    margin-bottom: 6px;
+    font-style: italic;
+}
+
+.fknomate {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+}
+
+.project-view {
+    opacity:1;
+    margin: 0 auto;
+    box-shadow: 0px 0px 3px #c0c0c0;
+    @include transition(opacity 700ms cubic-bezier(0.455, 0.030, 0.515, 0.955));
+    .xl &{
+        max-width: 650px;
+    }
+    &.post-fade{
+        opacity:1;
+    }
+    img {
+        height:340px;
+        width:fit-content;
+    }
+    .text-content {
+        p {
+            margin-bottom:0.5rem;
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    .project-view {
+        z-index:100;
+        left: 16%;
+        right: 16%;
+        bottom: 16%;
+        max-width:600px;            
+    }
+}
+
+//Transitions
+
+.simp-fade {
+    @include transition(opacity .5s ease-in-out);
+    opacity:0 !important;
+}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+.fade-enter, .fade-leave-to {
+opacity: 0;
+}
+
+.spinner {
+    width: 70px;
+    text-align: center;
+    position: absolute;
+    left: 44%;
+    top: 50%;
+}
+  
+  .spinner > div {
+    width: 18px;
+    height: 18px;
+    background-color: #b94c4c;
+  
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  }
+  
+  .spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+  }
+  
+  .spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+  }
+  
+  @-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% { -webkit-transform: scale(0) }
+    40% { -webkit-transform: scale(1.0) }
+  }
+  
+  @keyframes sk-bouncedelay {
+    0%, 80%, 100% { 
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    } 40% { 
+      -webkit-transform: scale(1.0);
+      transform: scale(1.0);
+    }
+  }
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	70% {
+		transform: scale(1.5);
+		box-shadow: 0 0 0 3px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(1);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+button {
+    
+    &::after {
+        content: '';
+        width: 0%;
+        height: 100%;
+        top:0;
+        left:0;
+        position:absolute;
+        z-index: -1;
+        background: $sk-red-dark;
+        @include transition(all 0.5s ease-in-out);
+    }
+
+    &:hover::after {
+        width:100%;
+    }
+
+    &::before {
+        content: "";
+        width: 100%;
+        height: 100%;;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -2;
+        background: $sk-red;
+        @include transition(all 0.5s ease-in-out);
+    }
+
+    &.disabled{
+        cursor: default;
+        &::before {
+            background: #da7c7c;   
+        }
+        &::after{
+            background: #da7c7c;
+        }
+        &:hover::after {    
+            width:0;
+        }
+    }
+}
+
+a.expand{
+    &::before {
+        content:'';
+        position:absolute;
+        width:0;
+        height:100%;
+        left:0;
+        top:0;
+        background:$sk-red;
+        z-index:-1;
+        @include transition(all .5s ease-in-out);
+    }
+    @include transition(all .5s ease-in-out);
+    &:hover {
+        &::before {
+            width:100%;
+        }
+        color:#fff;
+        
+    }
+}
+
+.ani-about {
+    @include transition(transform 0.5s ease-in-out);
+    &.break-active{
+    --transform-translate-y: -40rem;
+    }
+}
+.progress-container {
+    @include transition(transform 0.5s ease-in-out);
+    &.break-active{
+    --transform-translate-y: 0rem;
+    }
+}
+
+.slidein {
+    opacity:0;
+}
+
+
+//post close
+.close-outer {
+    position: absolute;
+    margin: auto;
+    width: 30px;
+    cursor: pointer;
+    top: 15%;
+    right: 18%;
+    
+    .close-inner {
+        width: inherit;
+        text-align: center;
+        &::before, &::after{
+            position: absolute;
+            content: '';
+            height: 1px;
+            width: inherit;
+            background: #a6a6a6;
+            left: 0;
+            @include transition(all 0.3s ease-in);
+        }
+        &::before {
+            top: 50%; 
+            @include prefix((
+                transform: rotate(45deg)
+            ), webkit moz); 
+  
+        }  
+        &::after {  
+            bottom: 50%;
+            @include prefix((
+                transform: rotate(-45deg)
+            ), webkit moz); 
+        }  
+        label { 
+            font-size: .75rem; 
+            line-height: 2rem;
+            text-transform: uppercase;
+            color: #000;
+            @include transition(all 0.3s ease-in);
+            opacity: 0;
+            cursor: pointer;
+          }    
+    }
+
+    &:hover label {
+        opacity: 1;
+    }  
+
+    &:hover {
+        .close-inner:before,
+        .close-inner:after {
+            @include prefix((
+                transform: rotate(0)
+            ), webkit moz); 
+
+        }
+        .close-inner:before {
+            top: 0;
+        } 
+        .close-inner:after {
+            bottom: 0;
+        }  
+    } 
+  }
+
+
+  
+ 
+  
+
+
+ 
